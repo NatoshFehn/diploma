@@ -19,7 +19,7 @@
 ---------
 ## Инфраструктура
 
-• Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform.md).  
+• Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform).  
 • Для установки сервисов использован Ansible.
 
 ## *[Сеть main-network](terraform/network.tf)*
@@ -38,7 +38,62 @@
 ---------
 ## Сайт
 
+Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](terraform/web-servers.tf). 
+Поскольку это похожие ресурсы, то  в переменных [variables.tf](terraform/variables.tf)  создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адрес:
 
+```
+locals {
+  web-servers = {
+   "web-1" = { zone = "ru-central1-a", subnet_id  = yandex_vpc_subnet.private-subnet-1.id, ip_address = "10.1.0.10" },
+   "web-2" = { zone = "ru-central1-b", subnet_id  = yandex_vpc_subnet.private-subnet-2.id, ip_address = "10.2.0.10" }
+ }
+}
+```
+
+После этого, чтобы не описывать несколько похожих ресурсов, в одном ресурсе `yandex_compute_instance` [web-servers.tf](terraform/web-servers.tf) использован цикл `for_each`.
+
+id образа вынесен в переменную [variables.tf](terraform/variables.tf) и использован конкретный id - fd81ojtctf7kjqa3au3i - Debian 11.
+
+
+```tf
+resource "yandex_compute_instance" "web-servers" {
+  for_each    = local.web-servers
+  hostname    = each.key
+  name        = each.key
+  zone        = each.value.zone
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = var.image_id
+      type     = "network-ssd"
+      size     = "16"    
+      }
+  }
+
+  network_interface {
+    subnet_id  = each.value.subnet_id
+    security_group_ids = [yandex_vpc_security_group.private-sg.id]
+    ip_address         = each.value.ip_address
+  }
+
+  metadata = {
+    user-data = "${file("./meta.txt")}"
+  }
+
+
+} 
+```
+
+
+В результате созданы веб-сервера:
+
+    web-1 10.1.0.10 ru-central1-a
+    web-2 10.2.0.10 ru-central1-b
 
 ---------
 ## Мониторинг
