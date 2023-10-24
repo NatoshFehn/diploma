@@ -1,0 +1,9 @@
+#cloud-config
+
+users:
+ - name: martynova
+   groups: sudo
+   shell: /bin/bash
+   sudo: ['ALL=(ALL) NOPASSWD:ALL']
+   ssh-authorized-keys:
+     - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBK4y+pVCvD7VGb1yeLZyCprdXm+A7Mb+XeFd1ePyUasrUxZbfk4mvv+W6BeH7QFonXuU01MEDbIQishkoZwjP4w= martynova@sys 
