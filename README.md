@@ -22,14 +22,14 @@
 • Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform).  
 • Для установки сервисов использован Ansible.
 
-### [Сеть main-network](terraform/network.tf)
+### Сеть main-network
 
     Внутренняя подсеть для сайта web-1 10.1.0.0/16 ru-central1-a
     Внутренняя подсеть для сайта web-2 10.2.0.0/16 ru-central1-b
     Внутренняя подсеть для сервисов Elasticsearch, Prometheus 10.3.0.0/16 ru-central1-c
     Публичная подсеть bastion host, Grafana, Kibana 10.4.0.0/16 ru-central1-c
 
-### [Группы](terraform/groups.tf)
+### Группы
 
     Target Group - web-1, web-2 
     Backend Group = Target Group - web-1, web-2
@@ -37,6 +37,8 @@
 
 ---------
 ## Сайт
+
+
 
 Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](terraform/web-servers.tf). 
 Поскольку это похожие ресурсы, то  в переменных [variables.tf](terraform/variables.tf)  создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адреc.
@@ -59,8 +61,11 @@ locals {
 
 id образа вынесен в переменную [variables.tf](terraform/variables.tf) и использован конкретный id - fd81ojtctf7kjqa3au3i - Debian 11.
 
+<details>
 
-```tf
+*<summary>variables.tf</summary>*
+
+``` GO
 resource "yandex_compute_instance" "web-servers" {
   for_each    = local.web-servers
   hostname    = each.key
@@ -93,7 +98,7 @@ resource "yandex_compute_instance" "web-servers" {
 
 } 
 ```
-
+</details>
 
 В результате созданы веб-сервера:
 
