@@ -1,0 +1,58 @@
+# filebeat
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - gnupg2
+    state: present
+    
+
+- name: Get filebeat 8.10.3
+  ansible.builtin.get_url:  
+    url: https://mirror.yandex.ru/mirrors/elastic/8/pool/main/f/filebeat/filebeat-8.10.3-amd64.deb
+    dest: /home/martynova/
+
+- name: Install filebeat
+  apt:
+    deb: /home/martynova/filebeat-8.6.2-amd64.deb 
+
+
+- name: Copy config file for filebeat
+  template:
+    src: ../templates/filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+    mode: 0600
+    owner: root
+    group: root
+
+
+- name: Systemctl daemon reload
+
+  systemd:
+    daemon_reload: true
+    name: filebeat.service
+    state: started
+    
+
+- name: restarted nginx    
+  service:
+    name: nginx
+    state: restarted
+
+
+- name: restarted  filebeat
+  systemd:
+    name: filebeat.service
+    state: restarted
+
+
+- name: Enable filebeat.service, and not touch the state
+  ansible.builtin.service:
+    name: filebeat.service
+    enabled: yes
