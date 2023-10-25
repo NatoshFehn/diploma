@@ -1,0 +1,8 @@
+- name: Play web
+  hosts: web
+  become: yes
+  roles:
+    - geerlingguy.nginx  #1.18.0
+    - node_exporter
+    - nginx-exporter 
+    - filebeat
