@@ -20,7 +20,7 @@
 
 - name: Install filebeat
   apt:
-    deb: /home/martynova/filebeat-8.6.2-amd64.deb 
+    deb: /home/martynova/filebeat-8.10.3-amd64.deb 
 
 
 - name: Copy config file for filebeat
