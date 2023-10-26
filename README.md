@@ -19,8 +19,8 @@
 ---------
 ## Инфраструктура
 
-• Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform).  
-• Для установки сервисов использован [Ansible](https://github.com/NatoshFehn/Diplom/blob/main/ansible).
+• Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform).  
+• Для установки сервисов использован [Ansible](https://github.com/NatoshFehn/diploma/blob/main/ansible).
 
 ### Сеть main-network
 
@@ -38,10 +38,10 @@
 ---------
 ## Сайт
 
-![сайт](<https://github.com/NatoshFehn/Diplom/blob/main/img/сайт.JPG>)
+![сайт](<https://github.com/NatoshFehn/diploma/blob/main/img/сайт.JPG>)
 
-Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/web-servers.tf). 
-Поскольку это похожие ресурсы, то  в переменных [variables.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/variables.tf) создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адреc.
+Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/web-servers.tf). 
+Поскольку это похожие ресурсы, то  в переменных [variables.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/variables.tf) создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адреc.
 
 <details>
 
@@ -57,9 +57,9 @@ locals {
 ```
 </details>
 
-После этого, чтобы не описывать несколько похожих ресурсов, в одном ресурсе `yandex_compute_instance` [web-servers.tf]([terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform)/web-servers.tf) использован цикл `for_each`.
+После этого, чтобы не описывать несколько похожих ресурсов, в одном ресурсе `yandex_compute_instance` [web-servers.tf]([terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform)/web-servers.tf) использован цикл `for_each`.
 
-id образа вынесен в переменную [variables.tf]([terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform)/variables.tf) и использован конкретный id - fd81ojtctf7kjqa3au3i - Debian 11.
+id образа вынесен в переменную [variables.tf]([terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform)/variables.tf) и использован конкретный id - fd81ojtctf7kjqa3au3i - Debian 11.
 
 <details>
 
@@ -111,7 +111,7 @@ C помощью Ansible, с использованием [web-playbook.yml](ans
 - [nginx-exporter](ansible/roles/nginx-exporter) 
 - [filebeat](ansible/roles/filebeat)
 
-Использован  файл для сайта [index.html](https://github.com/NatoshFehn/Diplom/blob/main/ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c подстановкой ip адресов автоматически из terraform, c  помощью ресурса local_file [terraform/local_files.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/local_files.tf) и шаблона  [index.tpl](terraform/templates/index.tpl).
+Использован  файл для сайта [index.html](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c подстановкой ip адресов автоматически из terraform, c  помощью ресурса local_file [terraform/local_files.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/local_files.tf) и шаблона  [index.tpl](terraform/templates/index.tpl).
 
 Созданы Target Group, Backend Group [groups.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/groups.tf).
 
@@ -138,9 +138,9 @@ resource "yandex_alb_target_group" "tg-group" {
 ```
 </details>
 
-Создан HTTP router [router.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/router.tf).
+Создан HTTP router [router.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/router.tf).
 
-Создан Application load balancer [load-balancer.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/load-balancer.tf).
+Создан Application load balancer [load-balancer.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/load-balancer.tf).
 
 Сайт открывается с публичного IP балансера
 ### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
