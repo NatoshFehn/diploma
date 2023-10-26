@@ -20,7 +20,7 @@
 ## Инфраструктура
 
 • Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/Diplom/blob/main/terraform).  
-• Для установки сервисов использован Ansible.
+• Для установки сервисов использован [Ansible] (https://github.com/NatoshFehn/Diplom/blob/main/ansible).
 
 ### Сеть main-network
 
@@ -37,8 +37,6 @@
 
 ---------
 ## Сайт
-
-
 
 Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](terraform/web-servers.tf). 
 Поскольку это похожие ресурсы, то  в переменных [variables.tf](terraform/variables.tf)  создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адреc.
@@ -100,10 +98,50 @@ resource "yandex_compute_instance" "web-servers" {
 ```
 </details>
 
-В результате созданы веб-сервера:
+В результате созданы веб-сервера. ОС и содержимое ВМ идентично.
 
     web-1 10.1.0.10 ru-central1-a
     web-2 10.2.0.10 ru-central1-b
+
+C помощью Ansible, с использованием [web-playbook.yml](ansible/web-playbook.yml), на веб-сервера установлены:
+- nginx 1.18.0 с использованием роли [geerlingguy.nginx](ansible/roles/geerlingguy.nginx)
+- [node_exporter](ansible/roles/node_exporter)
+- [nginx-exporter](ansible/roles/nginx-exporter) 
+- [filebeat](ansible/roles/filebeat)
+
+Использован  файл для сайта [index.html](ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c подстановкой ip адресов автоматически из terraform, c  помощью ресурса local_file [terraform/local_files.tf](terraform/local_files.tf) и шаблона  [index.tpl](terraform/templates/index.tpl).
+
+Созданы Target Group, Backend Group [groups.tf](terraform/groups.tf).
+
+Так как создание nginx-серверов реализовано через цикл for each, то для автоматического добавления всех имеющихся nginx-серверов к балансировке использован мета-аргумент dynamic.
+
+<details>
+
+*<summary>мета-аргумент dynamic</summary>*
+
+```GO
+resource "yandex_alb_target_group" "tg-group" {
+  name = "tg-group"
+  
+  dynamic "target" {
+    for_each = local.web-servers
+    content {
+      ip_address = target.value.ip_address
+      subnet_id  = target.value.subnet_id
+
+    }
+  }
+  
+}
+```
+</details>
+
+Создан HTTP router [router.tf](terraform/router.tf).
+
+Создан Application load balancer [load-balancer.tf](terraform/load-balancer.tf).
+
+Сайт открывается с публичного IP балансера
+### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
 
 ---------
 ## Мониторинг
