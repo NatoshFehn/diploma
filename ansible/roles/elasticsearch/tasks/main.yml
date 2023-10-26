@@ -1,1 +1,42 @@
+---
+# elasticsearch
 
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - gnupg2
+    state: present
+    
+
+- name: Get elasticsearch 8.6.2 
+  ansible.builtin.get_url:  
+    url: https://mirror.yandex.ru/mirrors/elastic/8/pool/main/e/elasticsearch/elasticsearch-8.6.2-amd64.deb
+    dest: /home/martynova/
+
+- name: Install elasticsearch
+  apt:
+    deb: /home/martynova/elasticsearch-8.6.2-amd64.deb
+
+- name: Copy config file for elasticsearch
+  copy:
+    src: ../templates/elasticsearch.yml
+    dest: /etc/elasticsearch
+    mode: 0660
+    owner: root
+    group: elasticsearch
+    
+- name: Systemctl daemon reload
+  systemd:
+    daemon_reload: true
+    name: elasticsearch.service
+    state: started
+    
+- name: Systemctl enable elasticsearch 
+  systemd:
+    name: elasticsearch.service
+    state: restarted  
