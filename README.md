@@ -50,6 +50,7 @@
 ---------
 ## Сайт
 
+### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
 ![сайт](<https://github.com/NatoshFehn/diploma/blob/main/img/сайт.JPG>)
 
 Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/web-servers.tf). 
