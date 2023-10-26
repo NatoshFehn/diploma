@@ -157,6 +157,148 @@ resource "yandex_alb_target_group" "tg-group" {
 Сайт открывается с публичного IP балансера
 ### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
 
+Сайт протестирован 'curl -v 158.160.130.200:80'
+
+<details>
+
+*<summary>curl -v 158.160.130.200:80</summary>*
+
+```GO
+*   Trying 158.160.130.200:80...
+* Connected to 158.160.130.200 (158.160.130.200) port 80 (#0)
+> GET / HTTP/1.1
+> Host: 158.160.130.200
+> User-Agent: curl/7.74.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< server: ycalb
+< date: Thu, 26 Oct 2023 10:03:48 GMT
+< content-type: text/html
+< content-length: 2238
+< last-modified: Thu, 26 Oct 2023 09:19:56 GMT
+< etag: "653a2f3c-8be"
+< accept-ranges: bytes
+< 
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<title>sys-diplom-martynova</title>
+
+	<style type="text/css">
+		body {
+			font-family: 'Lato', sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 1.7;
+			color: #eee;
+		}
+
+		.header {
+			height: 100vh;
+			background-image: 
+			url('https://phonoteka.org/uploads/posts/2021-04/1618468797_11-phonoteka_org-p-dlinnii-fon-13.jpg');
+			
+		background-size: cover;
+			background-position: top;
+			position: relative;
+
+			clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+		}
+
+		.brand-box {
+			position: absolute;
+			top: 40px;
+			left: 40px;
+		}
+
+		.brand { font-size: 20px; }
+
+		.text-box {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		.heading-primary {
+			color: #fff;
+			text-transform: uppercase;
+
+			backface-visibility: hidden;
+			margin-bottom: 30px;
+		}
+
+		.heading-primary-main {
+			display: block;
+			font-size: 26px;
+			font-weight: 400;
+			letter-spacing: 5px;
+		}
+
+		.heading-primary-sub {
+			display: block;
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 7.4px;
+		}
+
+		.btn:link,
+		.btn:visited {
+			text-transform: uppercase;
+			text-decoration: none;
+			padding: 10px 20px;
+			display: inline-block;
+			border-radius: 100px;
+			transition: all .2s;
+			position: relative;
+		}
+
+		.btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		}
+
+		.btn:active {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.btn-white {
+			background-color: #fff;
+			color: #777;
+			font-size: 14px;
+		}
+
+	</style>
+</head>
+<body>
+
+<header class="header">
+
+	<div class="text-box">
+		<h1 class="heading-primary">
+		<span class="heading-primary-main">Hello, Netology! (c)Natalya Martynova</span>
+		</h1>
+		<a href="http://51.250.42.23:3000/" target="_blank" class="btn btn-white btn-animated">Grafana</a>
+		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+		<a  href="http://51.250.40.82:5601" target="_blank" class="btn btn-white btn-animated">Kibana</a>
+	</br>	</br>
+
+	</span></h1>
+	</div>
+	</header>
+
+</body>
+</html>
+* Connection #0 to host 158.160.130.200 left intact
+```
+</details>
+
 ---------
 ## Мониторинг
 
