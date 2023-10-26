@@ -399,5 +399,67 @@ resource "yandex_vpc_subnet" "public-subnet" {
 }
 ```
 </details>
+
+![Снимок7](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок7.JPG)
+
+Сервера web-1, web-2, Prometheus, Elasticsearch помещены в приватные подсети. 
+
+Сервера Grafana, Kibana, application load balancer, bastion host определены в публичную подсеть.
+
+Настроена Security Groups [groups.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/groups.tf) соответствующих сервисов на входящий трафик только к нужным портам.
+
+Настроена ВМ [bastion.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/bastion.tf) с публичным адресом 51.250.41.17, в которой  открыт только один порт — ssh. 
+
+Настроены все security groups на разрешение входящего ssh из этой security group. 
+Эта вм  реализует концепцию bastion host. 
+Можно  подключаться по ssh ко всем хостам через этот хост.
+
+Пример - доступ через бастион к web-1:
+
+```bash
+ssh -i ~/.ssh/id_rsa -J 51.250.41.17 martynova@10.1.0.10
+
+```
+![Снимок8](https://github.com/NatoshFehn/diploma/blob/main/img/Снимок8.JPG)
+
+В [hosts](https://github.com/NatoshFehn/diploma/blob/main/ansible/hosts) ansible указано специальное правило подключения к хостам через bastion host
+
+<details>
+
+*<summary>правило подключения к хостам через bastion host</summary>*
+
+```GO
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p -q 51.250.44.226"'
+
+```
+</details>
+
+Настроена таблица маршрутизации для доступа из машин в локальной сети к интеренет через бастион [network.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/network.tf).
+
+<details>
+
+*<summary>таблица маршрутизации</summary>*
+
+```GO
+resource "yandex_vpc_gateway" "nat_gateway" {
+  name = "test-gateway"
+  shared_egress_gateway {}
+}
+
+resource "yandex_vpc_route_table" "route_table" {
+  network_id = yandex_vpc_network.main-network.id
+
+  static_route {
+    destination_prefix = "0.0.0.0/0"
+    gateway_id         = yandex_vpc_gateway.nat_gateway.id
+  }
+}
+```
+</details>
+
+![Снимок9](https://github.com/NatoshFehn/diploma/blob/main/img/Снимок9.JPG)
+
 ---------
 ## Резервное копирование
