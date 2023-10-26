@@ -35,6 +35,18 @@
     Backend Group = Target Group - web-1, web-2
     Security Groups для внутренней подсети, для балансировщика, bastion host, Grafana, Kibana 
 
+### Инстансы 
+[web-1, web-2](https://github.com/NatoshFehn/diploma/blob/main/terraform/web-servers.tf) |
+[bastion](https://github.com/NatoshFehn/diploma/blob/main/terraform/bastion.tf) |
+[load-balancer](https://github.com/NatoshFehn/diploma/blob/main/terraform/load-balancer.tf) |
+[router](https://github.com/NatoshFehn/diploma/blob/main/terraform/router.tf) |
+[prometheus](https://github.com/NatoshFehn/diploma/blob/main/terraform/prometheus.tf) |
+[grafana](https://github.com/NatoshFehn/diploma/blob/main/terraform/grafana.tf) |
+[elasticsearch](https://github.com/NatoshFehn/diploma/blob/main/terraform/elasticsearch.tf) |
+[kibana](https://github.com/NatoshFehn/diploma/blob/main/terraform/kibana.tf)
+
+![Снимок2](https://github.com/NatoshFehn/diploma/blob/main/img/Снимок2.JPG)
+
 ---------
 ## Сайт
 
