@@ -323,7 +323,7 @@ resource "yandex_alb_target_group" "tg-group" {
 
 Развернута VPC.
 
-[terraform/network.tf](<https://github.com/NatoshFehn/diploma/blob/main/terraform/network.tf)
+[terraform/network.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/network.tf)
 
 <details>
 
