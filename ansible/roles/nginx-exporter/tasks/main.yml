@@ -1,1 +1,37 @@
+---
+# tasks file for ./roles/nginx-exporter
 
+  
+- name: download nginx log exporter
+  get_url:
+    url: https://github.com/martin-helmich/prometheus-nginxlog-exporter/releases/download/v1.9.2/prometheus-nginxlog-exporter_1.9.2_linux_amd64.tar.gz
+    dest: /tmp
+    
+- name: unarchive nginx log exporter
+  unarchive:
+    remote_src: yes
+    src: /tmp/prometheus-nginxlog-exporter_1.9.2_linux_amd64.tar.gz
+    dest: /tmp
+    
+- name: move nginx log exporter to /usr/bin
+  copy:
+    remote_src: yes
+    src: /tmp/prometheus-nginxlog-exporter
+    dest: /usr/bin/prometheus-nginxlog-exporter
+    owner: root
+    group: root
+    mode: 0755
+    
+- name: copy  nginx log exporter config
+  copy:
+    src: prometheus-nginxlog-exporter.hcl
+    dest: /etc/prometheus-nginxlog-exporter.hcl
+    
+- name: install unit file to systemd
+  copy:
+    src: nginxlog-exporter.service
+    dest: /etc/systemd/system/prometheus-nginxlog-exporter.service
+    owner: root
+    group: root
+    mode: 0600
+  notify: nginxlog-exporter systemd
