@@ -1,0 +1,34 @@
+# Prometheus
+# https://github.com/prometheus-community/ansible/tree/main/roles/prometheus
+
+- name: Play prometheus
+  hosts: prometheus
+  roles:
+  - node_exporter
+  - prometheus
+  vars:
+    prometheus_targets:
+      node:
+      - targets:
+        - "{{ groups['web'][0] }}:9100"
+        - "{{ groups['web'][1] }}:9100"
+        - "{{ hostvars['prometheus'].ansible_host }}:9100"
+        - "{{ hostvars['grafana'].ansible_host }}:9100"
+        - "{{ hostvars['elasticsearch'].ansible_host }}:9100"
+        - "{{ hostvars['kibana'].ansible_host }}:9100"
+
+
+      nginx:
+      - targets:
+        - "{{ groups['web'][0] }}:4040"
+        - "{{ groups['web'][1] }}:4040"
+
+    prometheus_scrape_configs:
+      - job_name: "node"
+        file_sd_configs:
+          - files:
+              - "{{ prometheus_config_dir }}/file_sd/node.yml"
+      - job_name: "nginx"
+        file_sd_configs:
+          - files:
+              - "{{ prometheus_config_dir }}/file_sd/nginx.yml"

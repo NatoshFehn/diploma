@@ -1,0 +1,7 @@
+### Play all
+
+- import_playbook: web-playbook.yml
+- import_playbook: prometheus-playbook.yml
+- import_playbook: grafana-playbook.yml
+- import_playbook: elasticsearch-playbook.yml 
+- import_playbook: kibana-playbook.yml 

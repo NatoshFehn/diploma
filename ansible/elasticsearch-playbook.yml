@@ -1,0 +1,8 @@
+# elasticsearch 8.6.2 
+
+- name: Play elasticsearch
+  hosts: elasticsearch
+  become: yes
+  roles:
+  - elasticsearch
+  - node_exporter
