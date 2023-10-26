@@ -1,1 +1,9 @@
-
+---
+# handlers file for ./roles/nginx-exporter
+  
+- name: nginxlog-exporter systemd
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: prometheus-nginxlog-exporter.service
