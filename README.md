@@ -400,7 +400,7 @@ resource "yandex_vpc_subnet" "public-subnet" {
 ```
 </details>
 
-![Снимок7](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок7.JPG)
+![Снимок7](https://github.com/NatoshFehn/diploma/blob/main/img/Снимок7.JPG)
 
 Сервера web-1, web-2, Prometheus, Elasticsearch помещены в приватные подсети. 
 
