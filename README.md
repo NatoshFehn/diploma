@@ -311,6 +311,57 @@ resource "yandex_alb_target_group" "tg-group" {
 ---------
 ## Мониторинг
 
+Prometheus установлен автоматически при помощи [ansible/prometheus-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/prometheus-playbook.yml) с использованием роли [https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/prometheus](ansible/roles/prometheus)  и переменных, через которые добавлены jobs и targets для node-exporter и ngnginx-exporter
+
+<details>
+
+*<summary>роль prometheus</summary>*
+
+```GO
+# Prometheus
+# https://github.com/prometheus-community/ansible/tree/main/roles/prometheus
+
+- name: Play prometheus
+  hosts: prometheus
+  roles:
+  - node_exporter
+  - prometheus
+  vars:
+    prometheus_targets:
+      node:
+      - targets:
+        - "{{ groups['web'][0] }}:9100"
+        - "{{ groups['web'][1] }}:9100"
+        - "{{ hostvars['prometheus'].ansible_host }}:9100"
+        - "{{ hostvars['grafana'].ansible_host }}:9100"
+        - "{{ hostvars['elasticsearch'].ansible_host }}:9100"
+        - "{{ hostvars['kibana'].ansible_host }}:9100"
+
+
+      nginx:
+      - targets:
+        - "{{ groups['web'][0] }}:4040"
+        - "{{ groups['web'][1] }}:4040"
+
+    prometheus_scrape_configs:
+      - job_name: "node"
+        file_sd_configs:
+          - files:
+              - "{{ prometheus_config_dir }}/file_sd/node.yml"
+      - job_name: "nginx"
+        file_sd_configs:
+          - files:
+              - "{{ prometheus_config_dir }}/file_sd/nginx.yml"
+```
+</details>
+
+node-exporter установлен на все вм с помощью роли [ansible/roles/node_exporter](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/node_exporter) - # https://github.com/prometheus-community/ansible/tree/main/roles/node_exporter.
+
+
+nginx-exporter установлен на [web-servers](ansible/web-playbook.yml)  при помощи роли [ansible/roles/nginx-exporter](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/nginx-exporter) - # https://github.com/martin-helmich/prometheus-nginxlog-exporter.
+
+
+Grafana ставится автоматически при помощи [ansible/grafana-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/grafana-playbook.yml) с использованием роли [ansible/roles/cloudalchemy.grafana](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/cloudalchemy.grafana)  и переменных, через которые добавлены нужные дашборды и алерты, логин и пароль
 
 
 ---------
