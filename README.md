@@ -38,7 +38,7 @@
 ---------
 ## Сайт
 
-![сайт](<https://github.com/NatoshFehn/Diplom/blob/main/img/сайт.jpg>)
+![сайт](<https://github.com/NatoshFehn/Diplom/blob/main/img/сайт.JPG>)
 
 Создайно две ВМ в разных зонах посредством [Terraform](terraform): [web-servers.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/web-servers.tf). 
 Поскольку это похожие ресурсы, то  в переменных [variables.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/variables.tf) создан map, ключом в котором является имя сервера, а значения  содержет зону, подсеть, IP-адреc.
