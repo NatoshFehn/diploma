@@ -124,6 +124,8 @@ C помощью Ansible, с использованием [web-playbook.yml](ans
 - [nginx-exporter](ansible/roles/nginx-exporter) 
 - [filebeat](ansible/roles/filebeat)
 
+![Снимок3](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок3.JPG>)
+
 Использован  файл для сайта [index.html](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c подстановкой ip адресов автоматически из terraform, c  помощью ресурса local_file [terraform/local_files.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/local_files.tf) и шаблона  [index.tpl](terraform/templates/index.tpl).
 
 Созданы Target Group, Backend Group [groups.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/groups.tf).
@@ -151,9 +153,15 @@ resource "yandex_alb_target_group" "tg-group" {
 ```
 </details>
 
+![Снимок4](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок4.JPG>)
+
+![Снимок5](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок5.JPG>)
+
 Создан HTTP router [router.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/router.tf).
 
 Создан Application load balancer [load-balancer.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/load-balancer.tf).
+
+![Снимок6](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок6.JPG>)
 
 Сайт открывается с публичного IP балансера
 ### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
