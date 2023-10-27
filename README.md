@@ -514,3 +514,44 @@ resource "yandex_vpc_route_table" "route_table" {
 
 ---------
 ## Резервное копирование
+
+Созданы snapshot дисков всех ВМ посредством `terraform` [snapshot.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/snapshot.tf). 
+Настроено ежедневное копирование.
+Ограничено время жизни snaphot в неделю - число хранимых снимков 7. 
+
+Так как создание nginx-серверов реализовано через цикл for each, то создание snapshot для них также описано через цикл.
+
+<details>
+
+*<summary>создание snapshot</summary>*
+
+```GO
+resource "yandex_compute_snapshot_schedule" "snapshot2" {
+  for_each    = local.web-servers
+  name = "snapshot-${each.key}"
+
+  schedule_policy {
+    expression = "0 0 ? * *"
+  }
+
+  snapshot_count = 7
+
+  snapshot_spec {
+    description = "daily-snapshot"
+  }
+
+  disk_ids = [yandex_compute_instance.web-servers[each.key].boot_disk.0.disk_id]
+  
+}
+```
+</details>
+
+![snapshots](https://github.com/NatoshFehn/diploma/blob/main/img/snapshots.JPG)
+
+![snapshot](https://github.com/NatoshFehn/diploma/blob/main/img/snapshot.JPG)
+
+![snapshots_all](https://github.com/NatoshFehn/diploma/blob/main/img/snapshots_all.JPG)
+
+![snapshots_web1](https://github.com/NatoshFehn/diploma/blob/main/img/snapshots_web1.JPG)
+
+![napshots_web2](https://github.com/NatoshFehn/diploma/blob/main/img/snapshots_web2.JPG)
