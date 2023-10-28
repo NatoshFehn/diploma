@@ -131,7 +131,7 @@ C помощью Ansible, с использованием [web-playbook.yml](ans
 
 ![Снимок3](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок3.JPG>)
 
-Использован  файл для сайта [index.html](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c подстановкой ip адресов автоматически из terraform, c  помощью ресурса local_file [terraform/local_files.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/local_files.tf) и шаблона  [index.tpl](terraform/templates/index.tpl).
+Использован  файл для сайта [index.html](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/geerlingguy.nginx/files/index.html), сгенерирован c  помощью ресурса local_file [terraform/local_files.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/local_files.tf) и шаблона [index.tpl](terraform/templates/index.tpl).
 
 Созданы Target Group, Backend Group [groups.tf](https://github.com/NatoshFehn/Diplom/blob/main/terraform/groups.tf).
 
