@@ -75,7 +75,7 @@ locals {
 ```
 </details>
 
-После этого, чтобы не описывать несколько похожих ресурсов, в одном ресурсе `yandex_compute_instance` [web-servers.tf]([terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform)/web-servers.tf) использован цикл `for_each`.
+После этого, чтобы не описывать несколько похожих ресурсов, в одном ресурсе `yandex_compute_instance` [web-servers.tf](https://github.com/NatoshFehn/diploma/blob/main/terraform/web-servers.tf) использован цикл `for_each`.
 
 id образа вынесен в переменную [variables.tf]([terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform)/variables.tf) и использован конкретный id - fd81ojtctf7kjqa3au3i - Debian 11.
 
