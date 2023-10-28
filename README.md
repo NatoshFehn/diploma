@@ -353,13 +353,67 @@ node-exporter установлен на все вм с помощью роли [
 nginx-exporter установлен на [web-servers](ansible/web-playbook.yml)  при помощи роли [ansible/roles/nginx-exporter](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/nginx-exporter) - # https://github.com/martin-helmich/prometheus-nginxlog-exporter.
 
 
-Grafana ставится автоматически при помощи [ansible/grafana-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/grafana-playbook.yml) с использованием роли [ansible/roles/cloudalchemy.grafana](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/cloudalchemy.grafana)  и переменных, через которые добавлены нужные дашборды и алерты, логин и пароль
+Grafana ставится автоматически при помощи [ansible/grafana-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/grafana-playbook.yml) с использованием роли [ansible/roles/cloudalchemy.grafana](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/cloudalchemy.grafana)
+
+![grafana](https://github.com/NatoshFehn/diploma/blob/main/img/grafana.JPG)
+
+![Dashboardnginx](https://github.com/NatoshFehn/diploma/blob/main/img/Dashboardnginx.JPG)
 
 
 ---------
 ## Логи
 
+Elasticsearch, kibana-playbook и filebeats установлены автоматически через ansible плейбуки и роли с использованием шаблонов:
 
+- [ansible/elasticsearch-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/elasticsearch-playbook.yml)
+- [ansible/kibana-playbook.yml](https://github.com/NatoshFehn/diploma/blob/main/ansible/kibana-playbook.yml)
+- [ansible/roles/filebeat](https://github.com/NatoshFehn/diploma/blob/main/ansible/roles/filebeat)
+
+Бинарные файлы для установки скачиваются с зеркала Яндекс:
+
+https://mirror.yandex.ru/mirrors/elastic/8/pool/main/
+
+Статус кластера - green.
+
+![elasticsearch_health](img/elasticsearch_health.png)
+
+Сконфигурировано соединение `kibana` c `elasticsearch` посредством передачи шаблона `kibana.yml`` через ansible [kibana-playbook.yml](ansible/kibana-playbook.yml):
+
+[kibana.yml.j2](ansible/roles/kibana/templates/kibana.yml.j2)
+
+![kibanaconf](img/kibanaconf.png)
+
+Настроена доставка логов `nginx` в `elasticsearch` посредством передачи шаблона `filebeat.yml` через ansible [web-playbook.yml](ansible/web-playbook.yml):
+
+[filebeat.yml.j2](ansible/roles/filebeat/templates/filebeat.yml.j2)
+
+```yml
+...
+
+filebeat.inputs:
+- type: filestream
+  id: my-filestream-id
+  enabled: true
+  paths:
+    - /var/log/nginx/access.log
+    - /var/log/nginx/error.log
+
+setup.kibana:
+  host: "http://10.4.0.100:5601"
+
+output.elasticsearch:
+  hosts: ["10.3.0.100:9200"]
+
+...
+
+```
+
+![filebeat](img/filebeat.png)
+
+Логи подтянулись автоматически и доступны по публичному IP сервера kibana:
+### <a href = "http://51.250.47.218:5601/app/discover" target="_blank">http://51.250.47.218:5601</a>
+
+![kibana_discover_filebeat](img/kibana_discover_filebeat.png)
 
 ---------
 ## Сеть
