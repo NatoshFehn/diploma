@@ -373,22 +373,19 @@ Elasticsearch, kibana-playbook и filebeats установлены автома�
 
 https://mirror.yandex.ru/mirrors/elastic/8/pool/main/
 
-Статус кластера - green.
-
-![elasticsearch_health](img/elasticsearch_health.png)
-
 Сконфигурировано соединение `kibana` c `elasticsearch` посредством передачи шаблона `kibana.yml`` через ansible [kibana-playbook.yml](ansible/kibana-playbook.yml):
 
 [kibana.yml.j2](ansible/roles/kibana/templates/kibana.yml.j2)
-
-![kibanaconf](img/kibanaconf.png)
 
 Настроена доставка логов `nginx` в `elasticsearch` посредством передачи шаблона `filebeat.yml` через ansible [web-playbook.yml](ansible/web-playbook.yml):
 
 [filebeat.yml.j2](ansible/roles/filebeat/templates/filebeat.yml.j2)
 
-```yml
-...
+<details>
+
+*<summary>доставка логов</summary>*
+
+```GO
 
 filebeat.inputs:
 - type: filestream
@@ -404,16 +401,12 @@ setup.kibana:
 output.elasticsearch:
   hosts: ["10.3.0.100:9200"]
 
-...
-
 ```
+</details>
 
-![filebeat](img/filebeat.png)
+![filebeat](https://github.com/NatoshFehn/diploma/blob/main/img/filebeat.JPG)
 
-Логи подтянулись автоматически и доступны по публичному IP сервера kibana:
-### <a href = "http://51.250.47.218:5601/app/discover" target="_blank">http://51.250.47.218:5601</a>
-
-![kibana_discover_filebeat](img/kibana_discover_filebeat.png)
+![kibana_discover_filebeat](https://github.com/NatoshFehn/diploma/blob/main/img/kibana_discover_filebeat.JPG)
 
 ---------
 ## Сеть
