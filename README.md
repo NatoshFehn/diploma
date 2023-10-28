@@ -163,8 +163,7 @@ resource "yandex_alb_target_group" "tg-group" {
 
 ![Снимок6](<https://github.com/NatoshFehn/diploma/blob/main/img/Снимок6.JPG>)
 
-Сайт открывается с публичного IP балансера
-### <a href = "http://158.160.130.200/" target="_blank">http://158.160.130.200/</a>
+Сайт открывается с публичного IP балансера.
 
 Сайт протестирован 'curl -v 158.160.130.200:80'
 
@@ -183,11 +182,11 @@ resource "yandex_alb_target_group" "tg-group" {
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 200 OK
 < server: ycalb
-< date: Thu, 26 Oct 2023 10:03:48 GMT
+< date: Sat, 28 Oct 2023 09:07:19 GMT
 < content-type: text/html
-< content-length: 2238
-< last-modified: Thu, 26 Oct 2023 09:19:56 GMT
-< etag: "653a2f3c-8be"
+< content-length: 1499
+< last-modified: Sat, 28 Oct 2023 09:03:31 GMT
+< etag: "653cce63-5db"
 < accept-ranges: bytes
 < 
 <!doctype html>
@@ -196,6 +195,7 @@ resource "yandex_alb_target_group" "tg-group" {
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<title>sys-diplom-martynova</title>
+
 
 	<style type="text/css">
 		body {
@@ -206,11 +206,13 @@ resource "yandex_alb_target_group" "tg-group" {
 			color: #eee;
 		}
 
+
 		.header {
 			height: 100vh;
 			background-image: 
 			url('https://phonoteka.org/uploads/posts/2021-04/1618468797_11-phonoteka_org-p-dlinnii-fon-13.jpg');
-			
+
+
 		background-size: cover;
 			background-position: top;
 			position: relative;
@@ -224,6 +226,7 @@ resource "yandex_alb_target_group" "tg-group" {
 			left: 40px;
 		}
 
+
 		.brand { font-size: 20px; }
 
 		.text-box {
@@ -234,13 +237,17 @@ resource "yandex_alb_target_group" "tg-group" {
 			text-align: center;
 		}
 
+
+
 		.heading-primary {
 			color: #fff;
 			text-transform: uppercase;
 
+
 			backface-visibility: hidden;
 			margin-bottom: 30px;
 		}
+
 
 		.heading-primary-main {
 			display: block;
@@ -249,6 +256,8 @@ resource "yandex_alb_target_group" "tg-group" {
 			letter-spacing: 5px;
 		}
 
+
+
 		.heading-primary-sub {
 			display: block;
 			font-size: 18px;
@@ -256,54 +265,32 @@ resource "yandex_alb_target_group" "tg-group" {
 			letter-spacing: 7.4px;
 		}
 
-		.btn:link,
-		.btn:visited {
-			text-transform: uppercase;
-			text-decoration: none;
-			padding: 10px 20px;
-			display: inline-block;
-			border-radius: 100px;
-			transition: all .2s;
-			position: relative;
-		}
-
-		.btn:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-		}
-
-		.btn:active {
-			transform: translateY(-1px);
-			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-		}
-
-		.btn-white {
-			background-color: #fff;
-			color: #777;
-			font-size: 14px;
-		}
 
 	</style>
 </head>
 <body>
 
+
 <header class="header">
+
 
 	<div class="text-box">
 		<h1 class="heading-primary">
 		<span class="heading-primary-main">Hello, Netology! (c)Natalya Martynova</span>
 		</h1>
-		<a href="http://51.250.42.23:3000/" target="_blank" class="btn btn-white btn-animated">Grafana</a>
-		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-		<a  href="http://51.250.40.82:5601" target="_blank" class="btn btn-white btn-animated">Kibana</a>
 	</br>	</br>
+
 
 	</span></h1>
 	</div>
 	</header>
 
+
+
 </body>
+
 </html>
+
 * Connection #0 to host 158.160.130.200 left intact
 ```
 </details>
