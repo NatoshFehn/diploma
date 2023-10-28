@@ -20,7 +20,12 @@
 ## Инфраструктура
 
 • Для развертки инфраструктуры использован [Terraform](https://github.com/NatoshFehn/diploma/blob/main/terraform).  
+
+![terraform](https://github.com/NatoshFehn/diploma/blob/main/img/terraform.JPG)
+
 • Для установки сервисов использован [Ansible](https://github.com/NatoshFehn/diploma/blob/main/ansible).
+
+![Снимок1](https://github.com/NatoshFehn/diploma/blob/main/img/Снимок1.JPG)
 
 ### Сеть main-network
 
