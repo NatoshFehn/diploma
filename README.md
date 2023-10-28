@@ -406,6 +406,8 @@ output.elasticsearch:
 
 ![filebeat](https://github.com/NatoshFehn/diploma/blob/main/img/filebeat.JPG)
 
+![kibana_discover_filebeat](https://github.com/NatoshFehn/diploma/blob/main/img/kibana_discover_filebeat.png)
+
 ---------
 ## Сеть
 
